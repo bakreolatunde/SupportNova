@@ -1,0 +1,5 @@
+{
+  "note": "Non-code-editable escalation tuning. python_validation.escalation_checker reads keyword patterns from code today — move them here first if the hidden-eval pack needs new patterns added without a source change.",
+  "repeat_unresolved_threshold": 3,
+  "manual_review_severities": ["critical"]
+}

@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block title %}Create account — SupportNova{% endblock %}
+{% block content %}
+<div class="auth-wrap">
+  <div class="panel">
+    <h2>Create an account</h2>
+    <p class="lede">Customer accounts can submit and track complaints. Agent and admin accounts are usually created by your team lead.</p>
+    {% if error %}<div class="error-banner">{{ error }}</div>{% endif %}
+    <form method="post" action="/register-page" class="full">
+      <label for="email">Email</label>
+      <input id="email" type="email" name="email" required autofocus>
+      <label for="password">Password</label>
+      <input id="password" type="password" name="password" required minlength="8">
+      <label for="role">Account type</label>
+      <select id="role" name="role">
+        <option value="customer">Customer</option>
+        <option value="agent">Agent</option>
+        <option value="admin">Admin</option>
+      </select>
+      <button type="submit" class="btn-primary">Create account</button>
+    </form>
+    <p class="form-foot">Already have one? <a href="/login-page">Log in</a></p>
+  </div>
+</div>
+{% endblock %}

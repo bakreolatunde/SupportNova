@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block title %}Log in — SupportNova{% endblock %}
+{% block content %}
+<div class="auth-wrap">
+  <div class="panel">
+    <h2>Log in</h2>
+    <p class="lede">Track your complaints, or jump into the review queue.</p>
+    {% if error %}<div class="error-banner">{{ error }}</div>{% endif %}
+    <form method="post" action="/login-page" class="full">
+      <label for="email">Email</label>
+      <input id="email" type="email" name="email" required autofocus>
+      <label for="password">Password</label>
+      <input id="password" type="password" name="password" required>
+      <button type="submit" class="btn-primary">Log in</button>
+    </form>
+    <p class="form-foot">New here? <a href="/register-page">Create an account</a></p>
+  </div>
+</div>
+{% endblock %}

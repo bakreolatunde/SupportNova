@@ -1,0 +1,7 @@
+{
+  "note": "Departments a complaint can be routed to. Add rows here (and matching RuleMatrixEntry rows) to add a new department — no code changes needed.",
+  "departments": [
+    "Billing", "Fraud & Security", "Logistics", "Warranty & Returns",
+    "Technical Support", "Quality & Safety", "Customer Retention"
+  ]
+}

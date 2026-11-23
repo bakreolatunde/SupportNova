@@ -1,0 +1,12 @@
+# Local prod-like run: `docker compose up --build`
+# Swap DATABASE_URL to a real Postgres service before using this for
+# anything beyond local testing — SQLite doesn't handle concurrent writers well.
+services:
+  app:
+    build: .
+    ports:
+      - "8000:8000"
+    env_file:
+      - .env
+    volumes:
+      - ./supportnova.db:/app/supportnova.db

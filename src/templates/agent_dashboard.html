@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block title %}Review queue — SupportNova{% endblock %}
+{% block content %}
+<h2>Review queue</h2>
+<p class="lede">Complaints Pipeline 2 flagged — a mismatch with the rule matrix, an unsupported claim, or a category it hasn't seen before.</p>
+
+<table class="rows">
+  <tr><th>Received</th><th>Reason</th><th>Complaint</th><th></th></tr>
+  {% for item in queue %}
+  <tr class="sev-{{ 'critical' if 'unsupported_promise' in item.reason or 'missed_escalation' in item.reason else 'high' }}">
+    <td>{{ item.created_at.strftime("%d %b, %H:%M") }}</td>
+    <td>{{ item.reason }}</td>
+    <td>{{ item.complaint.raw_text[:110] }}{% if item.complaint.raw_text|length > 110 %}…{% endif %}</td>
+    <td>
+      <form method="post" action="/dashboard/agent/resolve/{{ item.id }}">
+        <button type="submit" class="btn-quiet">Mark resolved</button>
+      </form>
+    </td>
+  </tr>
+  {% else %}
+  <tr class="empty-row"><td colspan="4">Queue is empty — nothing waiting on a human right now.</td></tr>
+  {% endfor %}
+</table>
+{% endblock %}

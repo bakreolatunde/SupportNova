@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block title %}My complaints — SupportNova{% endblock %}
+{% block content %}
+<h2>My complaints</h2>
+<p class="lede">Submit a new complaint below — SupportNova routes it automatically and flags anything that needs a human look.</p>
+
+{% if submitted %}<div class="success-banner">Complaint submitted{% if needs_review %} — a specialist will review it shortly{% endif %}.</div>{% endif %}
+{% if error %}<div class="error-banner">{{ error }}</div>{% endif %}
+
+<div class="panel" style="margin-bottom:32px;">
+  <h3>Submit a complaint</h3>
+  <form method="post" action="/dashboard/customer/submit" class="full">
+    <label for="text">What happened?</label>
+    <textarea id="text" name="text" required placeholder="Describe the issue — include an order number if you have one."></textarea>
+    <button type="submit" class="btn-primary">Submit complaint</button>
+  </form>
+</div>
+
+<div class="section-head"><h3>History</h3></div>
+<table class="rows">
+  <tr><th>Submitted</th><th>Status</th><th>Complaint</th></tr>
+  {% for c in complaints %}
+  <tr class="sev-{{ 'critical' if c.status == 'needs_review' else 'low' }}">
+    <td>{{ c.submitted_at.strftime("%d %b, %H:%M") }}</td>
+    <td><span class="status-text {{ c.status }}">{{ c.status.replace('_', ' ') }}</span></td>
+    <td>{{ c.raw_text[:130] }}{% if c.raw_text|length > 130 %}…{% endif %}</td>
+  </tr>
+  {% else %}
+  <tr class="empty-row"><td colspan="3">Nothing here yet — a complaint you submit will show up in this list.</td></tr>
+  {% endfor %}
+</table>
+{% endblock %}

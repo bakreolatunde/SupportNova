@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block title %}Overview — SupportNova{% endblock %}
+{% block content %}
+<h2>Overview</h2>
+<p class="lede">System-wide status across both pipelines.</p>
+
+<div class="stat-strip">
+  <div class="stat"><div class="n">{{ stats.total_complaints }}</div><div class="label">Total complaints</div></div>
+  <div class="stat"><div class="n">{{ stats.needs_review }}</div><div class="label">Needs review</div></div>
+  <div class="stat"><div class="n">{{ stats.validated }}</div><div class="label">Auto-validated</div></div>
+  <div class="stat"><div class="n">{{ stats.escalated }}</div><div class="label">Ever escalated</div></div>
+  <div class="stat"><div class="n">{{ stats.rule_matrix_rows }}</div><div class="label">Rule matrix rows</div></div>
+  <div class="stat"><div class="n">{{ stats.active_policies }}</div><div class="label">Active policies</div></div>
+</div>
+
+<div class="section-head"><h3>Recent complaints</h3></div>
+<table class="rows">
+  <tr><th>Submitted</th><th>Customer</th><th>Status</th><th>Complaint</th></tr>
+  {% for c in recent %}
+  <tr class="sev-{{ 'critical' if c.status == 'needs_review' else 'low' }}">
+    <td>{{ c.submitted_at.strftime("%d %b, %H:%M") }}</td>
+    <td>{{ c.customer_email }}</td>
+    <td><span class="status-text {{ c.status }}">{{ c.status.replace('_', ' ') }}</span></td>
+    <td>{{ c.raw_text[:90] }}{% if c.raw_text|length > 90 %}…{% endif %}</td>
+  </tr>
+  {% else %}
+  <tr class="empty-row"><td colspan="4">No complaints yet.</td></tr>
+  {% endfor %}
+</table>
+{% endblock %}
